@@ -1,6 +1,6 @@
-import http from 'k6/http';
-import { check, sleep } from 'k6';
-import { BASE_URL, getAuthHeaders} from './config.js';
+import { sleep } from 'k6';
+import { getAuthHeaders} from './config.js';
+import {checkMember, checkLine, checkStation, checkPath} from './functions.js';
 
 export let options = {
     vus: 1, // 1 user looping for 1 minute
@@ -12,10 +12,12 @@ export let options = {
 };
 
 export default function ()  {
-    let authHeaders = getAuthHeaders();
+    const authHeaders = getAuthHeaders();
 
-    let myObjects = http.get(`${BASE_URL}/members/me`, authHeaders).json();
-    check(myObjects, { 'retrieved member': (obj) => obj.id != 0 });
+    checkMember(authHeaders);
+    checkLine(authHeaders);
+    checkStation(authHeaders);
+    checkPath(authHeaders);
 
     sleep(1);
 };
