@@ -1,4 +1,8 @@
-const BASE_URL = 'https://sample-subway.o-r.kr';
+import http from 'k6/http';
+import {check} from 'k6';
+
+
+export const BASE_URL = 'https://sample-subway.o-r.kr';
 const USERNAME = 'test@test.ccom';
 const PASSWORD = 'test';
 
@@ -19,11 +23,9 @@ export function getAuthHeaders(){
         'logged in successfully': (resp) => resp.json('accessToken') !== '',
     });
 
-    let authHeaders = {
+    return {
         headers: {
             Authorization: `Bearer ${loginRes.json('accessToken')}`,
         },
     };
-
-    return authHeaders;
-}
+};
