@@ -30,21 +30,21 @@ export function checkMember(authHeaders){
 }
 
 export function checkStation(authHeaders){
-    // 지하철 호선 목록 확인
-    const minStationCount = 23;
+    // 지하철 정류장 목록 확인
+    const minStationCount = 616;
 
     let stationRes = http.get(`${BASE_URL}/stations`, authHeaders).json();
-    check(stationRes, { 'retrieved stations': (obj) => obj.json().length >= minStationCount });
+    check(stationRes, { 'retrieved stations': (obj) => obj.length >= minStationCount });
 
     return stationRes
 }
 
 export function checkLine(authHeaders){
-    // 지하철 역 목록 확인
-    const minLineCount = 616;
+    // 지하철 호선 목록 확인
+    const minLineCount = 23;
 
     let lineRes = http.get(`${BASE_URL}/lines`, authHeaders).json();
-    check(lineRes, { 'retrieved lines': (obj) => obj.json().length >= minLineCount });
+    check(lineRes, { 'retrieved lines': (obj) => obj.length >= minLineCount });
 
     return lineRes
 }
@@ -56,7 +56,7 @@ export function checkPath(authHeaders){
     const target = lines[Math.floor(Math.random() * lines.length)];
 
     let pathRes = http.get(`${BASE_URL}/paths?source=${source}&target=${target}`, authHeaders).json();
-    check(pathRes, { 'search path': (obj) => obj.json('stations').length > 0 });
+    check(pathRes, { 'search path': (obj) => obj.stations.length >= 1 });
 
     return pathRes
 }

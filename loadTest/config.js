@@ -1,4 +1,4 @@
-import {checkLogin} from "./functions";
+import {checkLogin} from "./functions.js";
 
 
 export const BASE_URL = 'https://sample-subway.o-r.kr';
