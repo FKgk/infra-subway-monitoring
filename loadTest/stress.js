@@ -6,7 +6,6 @@ export const options = {
     scenarios: {
         stress: {
             executor: "ramping-arrival-rate",
-            preAllocatedVUs: 500,
             timeUnit: "1s",
             stages: [
                 { duration: "2m", target: 100 }, // below normal load
